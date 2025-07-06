@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Công Cụ Tạo Link Chuyển Hướng Nhanh</title>
+    <style>
+        :root {
+            --dark-bg: #0F0F23;
+            --light-text: #E0E0FF;
+            --purple-glow: #B026FF;
+            --blue-glow: #00D1F5;
+            --darker-bg: #2A2A4A;
+        }
+
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #1a1a3a;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(176, 38, 255, 0.3);
+            border: 1px solid var(--purple-glow);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            background: linear-gradient(90deg, var(--purple-glow), var(--blue-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        input[type="url"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--darker-bg);
+            border-radius: 10px;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="url"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--blue-glow);
+            box-shadow: 0 0 15px rgba(0, 209, 245, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--purple-glow), var(--blue-glow));
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 209, 245, 0.2);
+        }
+        
+        .output-group {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            padding: 15px;
+            border: 1px solid var(--darker-bg);
+            border-radius: 10px;
+            background-color: var(--dark-bg);
+            color: #a4ffa4;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        #copy-button {
+            margin-top: 15px;
+            background: #4A2376;
+            font-size: 16px;
+            width: auto;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trang Tạo Redirect Tự Động</h1>
+        
+        <div class="form-group">
+            <label for="url-input">Nhập trang web của bạn vào đây</label>
+            <input type="url" id="url-input" placeholder="https://www.google.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="time-input">Thời gian chuyển hướng (giây)</label>
+            <input type="number" id="time-input" value="5" min="1" required>
+        </div>
+
+        <button id="generate-button">Tạo Mã</button>
+
+        <div class="output-group" id="output-container" style="display: none;">
+             <label for="code-output">Đây là mã của Hoàng:</label>
+             <textarea id="code-output" readonly></textarea>
+             <button id="copy-button">Sao chép mã</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.getElementById('url-input');
+            const timeInput = document.getElementById('time-input');
+            const generateButton = document.getElementById('generate-button');
+            const codeOutput = document.getElementById('code-output');
+            const outputContainer = document.getElementById('output-container');
+            const copyButton = document.getElementById('copy-button');
+
+            generateButton.addEventListener('click', () => {
+                const url = urlInput.value.trim();
+                const time = parseInt(timeInput.value, 10);
+
+                if (!url || time <= 0) {
+                    alert('Hoàng ơi, kiểm tra lại xem đã nhập đủ URL và thời gian hợp lệ chưa nha!');
+                    return;
+                }
+                
+                // Mẫu HTML, CSS và JS được gộp chung
+                const template = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="${time};url=${url}">
+    <title>Đang chuyển hướng...</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #0F0F23;
+            color: #E0E0FF;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+        }
+        p {
+            font-size: 1.2em;
+        }
+        a {
+            color: #00D1F5;
+            text-decoration: none;
+        }
+        .countdown {
+            font-size: 3em;
+            font-weight: 700;
+            background: linear-gradient(90deg, #B026FF, #00D1F5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #00D1F5;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-top: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Bạn sẽ được chuyển hướng sau</h1>
+    <div id="countdown" class="countdown">${time}</div>
+    <p>Nếu không có gì xảy ra, hãy nhấn vào <a href="${url}">đây</a>.</p>
+    <div class="loader"></div>
+
+    <script>
+        (function() {
+            let seconds = ${time};
+            const countdownElement = document.getElementById('countdown');
+
+            const interval = setInterval(() => {
+                seconds--;
+                countdownElement.textContent = seconds;
+
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    window.location.href = "${url}";
+                }
+            }, 1000);
+        })();
+    <\/script>
+</body>
+</html>`;
+                
+                codeOutput.value = template;
+                outputContainer.style.display = 'block';
+            });
+
+            copyButton.addEventListener('click', () => {
+                codeOutput.select();
+                document.execCommand('copy');
+                copyButton.textContent = 'Đã sao chép! ✔️';
+                setTimeout(() => {
+                    copyButton.textContent = 'Sao chép mã';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
